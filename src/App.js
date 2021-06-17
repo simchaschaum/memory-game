@@ -16,9 +16,10 @@ class App extends React.Component{
       choice1: null,  // either the number of the first card chosen, or null
       card1: null,
       card2: null,
-      score1: 0, // player 1's score
-      score2: 0,  // player 2's score
+      scores: [0,0], // player(s) score(s)
       pairsArr: [], // array of card numbers of pairs that are now off the board
+      players: 1, // how many players
+      currentPlayer: 1 // for multi-player game
     }
   }
 
@@ -65,8 +66,8 @@ class App extends React.Component{
   }
 
   // trigged when 'new game' button is clicked
-  newGame = () => {
-    this.setState({pairsArr:[], gameOn: true, card1: null, card2: null, score1: 0, score2: 0});
+  newGame = (playersNum) => {
+    this.setState({pairsArr:[], gameOn: true, card1: null, card2: null, players: playersNum, currentPlayer: 1, scores: [0,0]});
     let inputNum = this.state.inputNum;
     let rand = Math.floor(Math.random()*10)
     fetch("https://picsum.photos/v2/list?page=" + rand + "&limit=" + inputNum)
@@ -76,13 +77,12 @@ class App extends React.Component{
       let picsArr = this.shuffle(this.makePicsArr(data));
       this.setState({picsArr: picsArr});
     })
-    .then(()=>this.setState({gameOn: true, score1: 0}))
+    .then(()=>this.setState({gameOn: true}))
     .catch(error => console.log(error))
   }
 
   // triggered when card is flipped (starts in Card component)
   cardFlip = (cardNum, picNum) => {
-    console.log(this.state.card1, this.state.card2)
     if(this.state.card1 !== 0 && !this.state.card1){   // CHECKING THAT IT'S NOT TRUTHY AND NOT ZERO - WORK??
       // If this is the first card chosen:
       this.setState({card1: cardNum, choice1: picNum})
@@ -91,9 +91,13 @@ class App extends React.Component{
       this.setState({card2: cardNum, cardsOn: false});
       if(picNum === this.state.choice1 && cardNum !== this.state.card1){
         // If it's a match - picNum and choice1 but cardNum does not equal card1 (so you can't just click the same card twice!)
-        let newScore = this.state.score1 + 1;
-        this.setState({score1: newScore}, ()=> {
-          console.log(`we have a match! Your score is now ${this.state.score1}`);
+        let scoresArr = this.state.scores;
+        console.log(scoresArr[0])
+        console.log(scoresArr[1])
+
+        scoresArr[this.state.currentPlayer-1] = this.state.scores[this.state.currentPlayer-1] + 1;
+        this.setState({scores: scoresArr}, ()=> {
+          console.log(`we have a match! Your score is now ${this.state.scores[this.state.currentPlayer-1]}`);
           let arr = this.state.pairsArr;
           arr.push(this.state.card1, this.state.card2);
           setTimeout(()=>this.setState({pairsArr: arr}), 2000)
@@ -103,6 +107,10 @@ class App extends React.Component{
           console.log("oohh, sorry.");
       }
       setTimeout(()=>this.setState({card1: null, card2: null, choice1: null}, ()=>{
+        if(this.state.players > 1){
+          let currentPlayer = this.state.currentPlayer === 1 ? 2 : 1;
+          this.setState({currentPlayer: currentPlayer})
+        }
         this.setState({cardsOn: true})
       }), 2000)
     }
@@ -121,8 +129,9 @@ class App extends React.Component{
           cardsOn = {this.state.cardsOn}
           pairsArr = {this.state.pairsArr}
           openingScreen = {this.openOpeningScreen}
-          score1 = {this.state.score1}
-          score2 = {this.state.score2}
+          scores = {this.state.scores}
+          players = {this.state.players}
+          currentPlayer = {this.state.currentPlayer}
       />
       : <OpeningScreen 
           newGame = {this.newGame}
