@@ -1,24 +1,114 @@
-/* Gameboard */
-div.gameBoard{
-  border: red 1px solid;
-  width: 90%;
-  margin: 5% auto;
-  height: 75vh;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Staatliches&display=swap');
 
+html,
+body{
+  width: 100vw;
+  min-height: 100vh;
+  background-color: var(--clr-sec);
+}
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Staatliches', cursive;
+}
+
+:root{
+  --clr-pri: #2E4172;
+  --clr-sec: #AA6C39;
+}
+.App{
+  position: relative;
+  min-height: 100vh
+}
+
+/* Opening Screen */
+div#openingSquareControls{
+  border: var(--clr-pri) 3px solid;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 0 5px var(--clr-pri);
+  width: 50%;
+  height: 300px;
+  margin: 5% auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+@media only screen and (max-width: 700px){
+  div#openingSquareControls{
+    width: 90%
+  }
+}
+div#openingSquareControls>div{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+div#openingSquareControls>div>h2:first-of-type{
+  margin-bottom: 35px;
+}
+span.MuiSlider-root{
+  width: 75%;
+  margin: 0 auto;
+}
+h1{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 6em;
+  color: var(--clr-pri);
+  text-align: center;
+  box-shadow: 0 0 3px var(--clr-sec);
+}
+@media only screen and (max-width: 700px){
+  h1{
+    font-size: 20vw
+  }
+}
+/* Gameboard */
+/* Helps footer positioning: */
+.gameBoardWrapper{
+  position: relative;
+  padding-bottom: 2rem;
+}
+div#score div{
+  width: 90%;
+  margin: 5px auto;
+  display: flex;
+  justify-content: space-between;
+}
+div.gameBoard{
+  width: 90%;
+  margin: 5px auto;
   display: grid;
+}
+.gameBoardSmall{
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 300px;
+  grid-template-rows: 1fr;
   grid-gap: 10px
+}
+ 
+div.gameBoardBig{
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr;
+  grid-gap: 10px
+}
+@media only screen and (max-width: 700px){
+  div.gameBoardBig{
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* Cards */
 div.card{
-  background-color: green;
-  border: black 1px solid;
   width: 100%;
   height: 100%;
   position: relative;
+  border-radius: 3px;
 }
+
 /* Only shows when covering image */
 div.cardCover{
   width:100%;
@@ -28,17 +118,61 @@ div.cardCover{
   top: 0;
   left: 0;
   opacity: 1;
-  background-color: green;
+  border-radius: 3px;
+  background-color: var(--clr-pri);
+  transition: background-color ease-in-out 150ms;
+}
+div.cardCover:hover{
+  background-color: #4F628E
 }
 .disappear{
   display: none;
 }
 img.cardCoverImg{
-  height: 100%;
-  width: 100%
+  max-height: 100%;
+  width: 100%;
+  border-radius: 3px;
 }
 img.cardPic{
   object-fit: cover;
-  height: 100%;
-  width: 100%
+  object-position: center center;
+  height: 20vh;
+  width: 100%;
+  border-radius: 3px;
+}
+@media only screen and (max-width: 700px){
+  img.cardPic{
+    height: 15vh;
+  }
+}
+p#credit{
+  font-size: 8px;
+  font-family: Montserrat;
+  text-align: center;
+  color: white;
+  position: absolute;
+  bottom: 5px;
+  left: 3px;
+}
+
+/* footer */
+/* With the help of #gameBoardWrapper */
+
+footer{
+  width: 90%;
+  height: 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -45%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer a{
+  text-decoration: none;
+  color: black
+}
+footer a:hover{
+  text-decoration: underline
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Gameboard from './Components/Gameboard';
 import OpeningScreen from './Components/Openingscreen';
 import './App.css';
@@ -30,7 +29,7 @@ class App extends React.Component{
 
   // shuffles the array of picture data
   shuffle = (arr) => {
-    for(var i = arr.length-1; i > 0; i--){
+    for(var i = arr.length-1; i >= 0; i--){
       let j = Math.floor(Math.random()*i+1);
       [arr[i],arr[j]] = [arr[j],arr[i]]
     }
@@ -45,7 +44,7 @@ class App extends React.Component{
       if(i % 2 === 0){
         num = counter
         url = arr[i].download_url;
-        credit = `Credit: ${arr[i].author}, ${<a href="https://unsplash.com}">Unsplash</a>}`
+        credit = `Credit: ${arr[i].author}, Unsplash`
       }  else {
         counter++
       }
@@ -92,19 +91,12 @@ class App extends React.Component{
       if(picNum === this.state.choice1 && cardNum !== this.state.card1){
         // If it's a match - picNum and choice1 but cardNum does not equal card1 (so you can't just click the same card twice!)
         let scoresArr = this.state.scores;
-        console.log(scoresArr[0])
-        console.log(scoresArr[1])
-
         scoresArr[this.state.currentPlayer-1] = this.state.scores[this.state.currentPlayer-1] + 1;
         this.setState({scores: scoresArr}, ()=> {
-          console.log(`we have a match! Your score is now ${this.state.scores[this.state.currentPlayer-1]}`);
           let arr = this.state.pairsArr;
           arr.push(this.state.card1, this.state.card2);
           setTimeout(()=>this.setState({pairsArr: arr}), 2000)
         });
-      } else {
-        // If it's not a match... but it's also not the same card that was already chosen
-          console.log("oohh, sorry.");
       }
       setTimeout(()=>this.setState({card1: null, card2: null, choice1: null}, ()=>{
         if(this.state.players > 1){
@@ -142,6 +134,17 @@ class App extends React.Component{
     return (
       <div className="App">
         {screen}
+        <footer>
+          <p> 
+            &copy; Simcha Schaum
+          </p>
+          <a href="https://icons8.com/icon/4wk1Z5SYRl5p/question-mark">
+            Question Mark icons by Icons8
+          </a>
+          <a href="https://unsplash.com/">
+            Pictures by Unsplash
+          </a>
+        </footer>
       </div>
     );
   }

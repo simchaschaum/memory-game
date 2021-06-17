@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import reactDom from 'react-dom';
-import ReactDOM from 'react-dom';
+import React from 'react';
 
 const Card = (props) => {
 
@@ -19,6 +17,7 @@ const Card = (props) => {
                 <img className="cardCoverImg" src={props.altUrl} alt="question mark"></img>
             </div>
             <img className="cardPic" src={props.url} alt="Memory Game Card"></img>
+            <p id="credit">{props.credit}</p>
         </div>
     )
 }

@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import reactDom from 'react-dom';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import Card from './Card';
 import Button from '@material-ui/core/Button';
 
@@ -17,23 +15,26 @@ const Gameboard = (props) => {
     const score = props.players === 1 ? 
         <div>
             <h2>{props.scores[0]} {matches1}</h2>
+            <Button variant="contained" className="newGame" onClick={() => resetGame()}>Reset Game</Button>
         </div> 
         : 
         <div>
             <h2>Player {props.currentPlayer}'s Turn!</h2>
             <h3>Player 1: {props.scores[0]} {matches1}</h3>
             <h3>Player 2: {props.scores[1]} {matches2}</h3>
+            <Button variant="contained" className="newGame" onClick={() => resetGame()}>Reset Game</Button>
         </div>
 
+    const gameBoard = props.cardsNum <= 12? "gameBoard gameBoardSmall" : "gameBoard gameBoardBig"
+
     return(
-        <div>
+        <div className="gameBoardWrapper">
             <div id="score">
                 {score}
             </div>
-            <Button variant="contained" className="newGame" onClick={() => resetGame()}>Reset Game</Button>
-            <div className="gameBoard">
+            <div className={gameBoard}>
                 {props.picsArr.map((card,index)=> (
-                    <div>
+                    <div key={index}>
                         <Card 
                             picNum = {card.picNum}
                             cardNum = {index}
