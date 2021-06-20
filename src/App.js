@@ -44,7 +44,7 @@ class App extends React.Component{
       if(i % 2 === 0){
         num = counter
         url = arr[i].download_url;
-        credit = `Credit: ${arr[i].author}, Unsplash`
+        credit = `Credit: ${arr[i].author}`;
       }  else {
         counter++
       }
