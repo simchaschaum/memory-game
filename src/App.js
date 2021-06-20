@@ -124,12 +124,11 @@ class App extends React.Component{
           scores = {this.state.scores}
           players = {this.state.players}
           currentPlayer = {this.state.currentPlayer}
-      />
-      : <OpeningScreen 
-          newGame = {this.newGame}
-          handleChange = {(event, value) => this.handleChange (event, value)}
         />
-
+          : <OpeningScreen 
+              newGame = {this.newGame}
+              handleChange = {(event, value) => this.handleChange (event, value)}
+            />
 
     return (
       <div className="App">

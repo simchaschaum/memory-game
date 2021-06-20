@@ -4,7 +4,9 @@ import Button from '@material-ui/core/Button';
 
 const Gameboard = (props) => {
     const resetGame = () => {
-        if(window.confirm(`Are you sure you want to reset the game?`)){
+        if(props.pairsArr.length === props.cardsNum){
+            props.openingScreen();
+        } else if(window.confirm(`Are you sure you want to reset the game?`)){
             props.openingScreen();
         }
     }
