@@ -35,7 +35,7 @@ class App extends React.Component{
     }
     return arr;
   }
-  // takes JSON data and creates neat array 
+  // takes JSON data and returns neat array 
   makePicsArr = (arr) => {
     let picsArr = [];
     let url, num, credit;
